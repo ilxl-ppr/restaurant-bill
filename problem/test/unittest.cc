@@ -35,7 +35,8 @@ TEST(Restaurant, Taxes)
 {
   for(int i = 0; i < 10; i++)
   {
-    double meal_cost = (int)((double)rand() / RAND_MAX * 100) / 100.0 ;
+    double meal_cost = ((double)rand() / RAND_MAX * 100) / 100.0 ;
+    meal_cost -=fmod(meal_cost,0.01);
     double taxes = meal_cost*0.075 ;
     std::string taxes_string = "Taxes: $" + to_string_double(taxes);
     std::string input = to_string_double(meal_cost) + " 15";
@@ -48,6 +49,7 @@ TEST(Restaurant, Tip)
   for(int i = 0; i < 10; i++)
   {
     double meal_cost = (int)((double)rand() / RAND_MAX * 100) / 100.0 ;
+    meal_cost -=fmod(meal_cost,0.01);
     double tip = (int)(((20 - 5) * ( (double)rand() / (double)RAND_MAX ) + 5)*100)/100.0;
     std::string tip_string = "Tip: $" + to_string_double(meal_cost*tip/100);
     std::string input = to_string_double(meal_cost) + " " + to_string_double(tip);
@@ -60,6 +62,7 @@ TEST(Restaurant, Total)
   for(int i = 0; i < 10; i++)
   {
     double meal_cost = (int)((double)rand() / RAND_MAX * 100) / 100.0 ;
+    meal_cost -= fmod(meal_cost,0.01);
     double tip = (int)(((20 - 5) * ( (double)rand() / (double)RAND_MAX ) + 5)*100)/100.0;
     double total = meal_cost + meal_cost * 0.075 + meal_cost * tip / 100;
     std::string total_string = "Total: $" + to_string_double(total);
