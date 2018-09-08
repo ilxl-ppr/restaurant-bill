@@ -5,7 +5,7 @@ using namespace std;
 int main() {
 
   double meal_cost,
-         tip_percentage;
+         tip_percentage,
          taxes, 
          tip, 
          total;
@@ -17,7 +17,7 @@ int main() {
   cout << endl;
   cout << "Restaurant Bill" << endl;
   cout << "====================" << endl;
-  subtotal = meal_cost;
+  double subtotal = meal_cost;
   cout << fixed << setprecision(2);
   cout << "Subtotal: $" << meal_cost << endl;
   taxes = meal_cost * 0.075;

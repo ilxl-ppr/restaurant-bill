@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include <random>
+#include <cmath>
 #include "gtest_ext.h"
 using ::testing::HasSubstr;
 using ::testing::MatchesRegex;
@@ -22,7 +23,8 @@ TEST(Restaurant, MealCost)
   srand (time(NULL));
   for(int i = 0; i < 10; i++)
   {
-    double meal_cost = (int)((double)rand() / RAND_MAX * 100) / 100.0 ;
+    double meal_cost = ((double)rand() / RAND_MAX * 100) / 100.0 ;
+    meal_cost -=  fmod(meal_cost,0.01);
     std::string meal_cost_string = "Subtotal: $" + to_string_double(meal_cost);
     std::string input = to_string_double(meal_cost) + " 15";
     ASSERT_MAIN_OUTPUT_THAT("restaurant", input, HasSubstr(meal_cost_string));
