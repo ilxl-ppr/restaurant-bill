@@ -2,10 +2,6 @@
 #include <gtest/gtest.h>
 #include "gtest_ext.h"
 
-using ::testing::ContainsRegex;
-using ::testing::HasSubstr;
-using ::testing::MatchesRegex;
-
 TEST(Restaurant, OutputFormat) {
   std::string program_output =
       "Please input meal cost: Please input tip "
