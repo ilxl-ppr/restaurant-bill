@@ -3,12 +3,12 @@
 #include "gtest_ext.h"
 
 TEST(Restaurant, OutputFormat) {
-  std::string program_output =
+  std::string unittest_output =
       "Please input meal cost: Please input tip "
       "percentage: \nRestaurant Bill\n====================\n"
       "Subtotal: $34.00\nTaxes: $2.55\nTip: $5.10\n"
       "====================\nTotal: $41.65\n";
-  ASSERT_EXECIO_EQ("main", "34 15", program_output);
+  ASSERT_EXECIO_EQ("main", "34 15", unittest_output);
 }
 
 TEST(Restaurant, MealCost) {
@@ -21,7 +21,7 @@ TEST(Restaurant, MealCost) {
     double taxes = meal_cost * 0.075;
     // randomly generate a tip between 0 and 15.00
     double total = meal_cost + taxes + meal_cost * 15 / 100;
-    std::string program_output =
+    std::string unittest_output =
         "Please input meal cost: Please input tip "
         "percentage: \nRestaurant Bill\n====================\n"
         "Subtotal: $" +
@@ -31,7 +31,7 @@ TEST(Restaurant, MealCost) {
         "====================\nTotal: $" +
         to_string_double(total) + "\n";
     std::string input = to_string_double(meal_cost) + " 15";
-    ASSERT_EXECIO_EQ("main", input, program_output);
+    ASSERT_EXECIO_EQ("main", input, unittest_output);
   }
 
   // umm
@@ -45,7 +45,7 @@ TEST(Restaurant, MealCost) {
     // randomly generate a tip between 0 and 15.00
     double tip = (rand() % 10 + 6)/RAND_MAX;
     double total = meal_cost + taxes + meal_cost * tip / 100;
-    std::string program_output = "Please input meal cost: Please input tip "
+    std::string unittest_output = "Please input meal cost: Please input tip "
                         "percentage: \nRestaurant Bill\n====================\n"
                         "Subtotal: $" + to_string_double(meal_cost) +
                         "\nTaxes: $" + to_string_double(taxes) + "\nTip: " +
@@ -54,7 +54,7 @@ TEST(Restaurant, MealCost) {
                         to_string_double(total) + "\n";
     std::string input = to_string_double(meal_cost) + " " +
                         to_string_double(tip);
-    ASSERT_EXECIO_EQ("main", input, program_output);
+    ASSERT_EXECIO_EQ("main", input, unittest_output);
   }*/
 }
 
@@ -66,16 +66,16 @@ TEST(Restaurant, Taxes) {
     double taxes = meal_cost * 0.075;
     double total = meal_cost + taxes + meal_cost * 15 / 100;
     std::string taxes_string = "Taxes: $" + to_string_double(taxes);
-    std::string program_output =
+    std::string unittest_output =
         "Please input meal cost: Please input tip "
         "percentage: \nRestaurant Bill\n====================\n"
         "Subtotal: $25.65\nTaxes: $";
-    program_output += to_string_double(taxes) + "\nTip: $" +
+    unittest_output += to_string_double(taxes) + "\nTip: $" +
                       to_string_double(meal_cost * 15 / 100) + "\n" +
                       "====================\nTotal: $" +
                       to_string_double(total) + "\n";
     std::string input = to_string_double(meal_cost) + " 15";
-    ASSERT_EXECIO_EQ("main", input, program_output);
+    ASSERT_EXECIO_EQ("main", input, unittest_output);
   }
 }
 
@@ -87,17 +87,17 @@ TEST(Restaurant, Tip) {
     double tip = (rand() % 10 + 6) / RAND_MAX;
     tip -= fmod(tip, 0.01);
     double total = meal_cost + taxes + meal_cost * tip / 100;
-    std::string program_output =
+    std::string unittest_output =
         "Please input meal cost: Please input tip "
         "percentage: \nRestaurant Bill\n====================\n"
         "Subtotal: $30.20\nTaxes: $";
-    program_output += to_string_double(taxes) + "\nTip: $" +
+    unittest_output += to_string_double(taxes) + "\nTip: $" +
                       to_string_double(meal_cost * tip / 100) + "\n" +
                       "====================\nTotal: $" +
                       to_string_double(total) + "\n";
     std::string input =
         to_string_double(meal_cost) + " " + to_string_double(tip);
-    ASSERT_EXECIO_EQ("main", input, program_output);
+    ASSERT_EXECIO_EQ("main", input, unittest_output);
   }
 }
 
@@ -111,7 +111,7 @@ TEST(Restaurant, Total) {
     // randomly generate a tip between 0 and 15.00
     double tip = (rand() % 10 + 6) / RAND_MAX;
     double total = meal_cost + taxes + meal_cost * tip / 100;
-    std::string program_output =
+    std::string unittest_output =
         "Please input meal cost: Please input tip "
         "percentage: \nRestaurant Bill\n====================\n"
         "Subtotal: $" +
@@ -122,7 +122,7 @@ TEST(Restaurant, Total) {
         to_string_double(total) + "\n";
     std::string input =
         to_string_double(meal_cost) + " " + to_string_double(tip);
-    ASSERT_EXECIO_EQ("main", input, program_output);
+    ASSERT_EXECIO_EQ("main", input, unittest_output);
   }
 }
 
