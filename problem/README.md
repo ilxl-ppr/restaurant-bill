@@ -38,8 +38,8 @@ cd prob02
 Use the `clang++` command to compile your code and the `./` command to run it. The sample code below shows how you would compile code save in `prob1.cpp` and into the executable file `prob1`. Make sure you use the correct filenames required in this problem.  Take note that if you make any changes to your code, you will need to compile it first before you see changes when running it.
 
 ```
-clang++ -std=c++17 prob1.cpp -o prob1
-./prob1
+clang++ -std=c++17 main.cpp -o main
+./main
 ```
 
 You can run one, two, or all the commands below to `test` your code, `stylecheck` your code's design, or `formatcheck` your work. Kindly make sure that you have compiled and executed your code before issuing any of the commands below to avoid errors.
