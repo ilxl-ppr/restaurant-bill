@@ -8,7 +8,7 @@ TEST(Restaurant, OutputFormat) {
       "percentage: \nRestaurant Bill\n====================\n"
       "Subtotal: $34.00\nTaxes: $2.55\nTip: $5.10\n"
       "====================\nTotal: $41.65\n";
-  ASSERT_EXECIO_EQ("main", "34 15", unittest_output);
+  ASSERT_EXECEQ("main", "34 15", unittest_output);
 }
 
 TEST(Restaurant, MealCost) {
@@ -31,7 +31,7 @@ TEST(Restaurant, MealCost) {
         "====================\nTotal: $" +
         to_string_double(total) + "\n";
     std::string input = to_string_double(meal_cost) + " 15";
-    ASSERT_EXECIO_EQ("main", input, unittest_output);
+    ASSERT_EXECEQ("main", input, unittest_output);
   }
 
   // umm
@@ -54,7 +54,7 @@ TEST(Restaurant, MealCost) {
                         to_string_double(total) + "\n";
     std::string input = to_string_double(meal_cost) + " " +
                         to_string_double(tip);
-    ASSERT_EXECIO_EQ("main", input, unittest_output);
+    ASSERT_EXECEQ("main", input, unittest_output);
   }*/
 }
 
@@ -75,7 +75,7 @@ TEST(Restaurant, Taxes) {
                       "====================\nTotal: $" +
                       to_string_double(total) + "\n";
     std::string input = to_string_double(meal_cost) + " 15";
-    ASSERT_EXECIO_EQ("main", input, unittest_output);
+    ASSERT_EXECEQ("main", input, unittest_output);
   }
 }
 
@@ -97,7 +97,7 @@ TEST(Restaurant, Tip) {
                       to_string_double(total) + "\n";
     std::string input =
         to_string_double(meal_cost) + " " + to_string_double(tip);
-    ASSERT_EXECIO_EQ("main", input, unittest_output);
+    ASSERT_EXECEQ("main", input, unittest_output);
   }
 }
 
@@ -122,11 +122,13 @@ TEST(Restaurant, Total) {
         to_string_double(total) + "\n";
     std::string input =
         to_string_double(meal_cost) + " " + to_string_double(tip);
-    ASSERT_EXECIO_EQ("main", input, unittest_output);
+    ASSERT_EXECEQ("main", input, unittest_output);
   }
 }
 
 int main(int argc, char **argv) {
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+    testing::InitGoogleTest(&argc, argv);    
+    ::testing::UnitTest::GetInstance()->listeners().Append(new SkipListener());
+    return RUN_ALL_TESTS();
 }
+
