@@ -1,18 +1,9 @@
-# Directory containing test files
-TEST_PATH     := test
-# Space-separated list of header files (e.g., algebra.hpp)
-HEADERS       :=
-# Space-separated list of implementation files (e.g., algebra.cpp)
-IMPLEMS       :=
-# File containing main
-DRIVER        := main.cpp
-# Expected name of executable file
-EXECFILE      := main
+include config.mk
+
 FILES         := $(DRIVER) $(IMPLEMS) $(HEADERS)
 SHELL         := /bin/bash
 HAS_CLANGTDY  := $(shell command -v clang-tidy 2> /dev/null)
 HAS_CLANGFMT  := $(shell command -v clang-format 2> /dev/null)
-CLANGTDY_CHKS := *,-google-build-using-namespace,-fuchsia-default-arguments,-llvm-header-guard
 
 
 .PHONY: test stylecheck formatcheck all clean
@@ -22,11 +13,10 @@ $(TEST_PATH)/unittest: $(TEST_PATH)/unittest.cpp $(DRIVER) $(IMPLEMS) $(HEADERS)
 
 /usr/lib/libgtest.a:
 	@echo -e "google test library not installed\n"
-	@echo -e "Installing libgtest-dev. Please provide the password when asked\n"
-	@sudo apt-get -y install libgtest-dev cmake
+	@echo -e "Installing cmake. Please provide the password when asked\n"
 	@sudo apt-get install cmake # install cmake
-	@echo -e "\nConfiguring libgtest-dev\n"
-	@cd /usr/src/gtest; sudo cmake CMakeLists.txt; sudo make; sudo cp *.a /usr/lib
+	@echo -e "\nDownloading and installing googletest\n"
+	@cd /tmp/; git clone https://github.com/google/googletest.git; cd googletest; cmake CMakeLists.txt; make; sudo cp -r googletest/include/. /usr/include; sudo cp -r googlemock/include/. /usr/include; sudo cp lib/*.a /usr/lib
 	@echo -e "Finished installing google test library\n"
 
 test: /usr/lib/libgtest.a $(TEST_PATH)/unittest
