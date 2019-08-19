@@ -45,7 +45,7 @@ TEST(Restaurant, Tip) {
 }
 
 TEST(Restaurant, Total) {
-    std::string unittest_output =
+  std::string unittest_output =
       "Please input meal cost: Please input tip percentage: \nRestaurant "
       "Bill\n====================\nSubtotal: $314.19\nTaxes: $23.56\nTip: "
       "$40.84\n====================\nTotal: $378.60\n";
@@ -54,8 +54,8 @@ TEST(Restaurant, Total) {
 }
 
 int main(int argc, char **argv) {
-    testing::InitGoogleTest(&argc, argv);    
-    ::testing::UnitTest::GetInstance()->listeners().Append(new SkipListener());
-    return RUN_ALL_TESTS();
+  testing::InitGoogleTest(&argc, argv);
+  ::testing::UnitTest::GetInstance()->listeners().Append(new SkipListener());
+  return RUN_ALL_TESTS();
 }
 
