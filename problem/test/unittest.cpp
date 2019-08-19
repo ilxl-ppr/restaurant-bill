@@ -2,128 +2,55 @@
 #include <gtest/gtest.h>
 #include "gtest_ext.h"
 
-TEST(Restaurant, OutputFormat) {
-  std::string unittest_output =
-      "Please input meal cost: Please input tip "
-      "percentage: \nRestaurant Bill\n====================\n"
-      "Subtotal: $34.00\nTaxes: $2.55\nTip: $5.10\n"
-      "====================\nTotal: $41.65\n";
-  ASSERT_EXECEQ("main", "34 15", unittest_output);
-}
-
-TEST(Restaurant, MealCost) {
-  srand(time(NULL));
-  for (int i = 0; i < 10; i++) {
-    // randomly generate a meal cost between 0 and $50
-    double meal_cost = (((double)rand() / RAND_MAX) * pow(10, rand() % 5));
-    // make sure the randomly generated double only has 2 decimal places
-    meal_cost -= fmod(meal_cost, 0.01);
-    double taxes = meal_cost * 0.075;
-    // randomly generate a tip between 0 and 15.00
-    double total = meal_cost + taxes + meal_cost * 15 / 100;
-    std::string unittest_output =
-        "Please input meal cost: Please input tip "
-        "percentage: \nRestaurant Bill\n====================\n"
-        "Subtotal: $" +
-        to_string_double(meal_cost) + "\nTaxes: $" + to_string_double(taxes) +
-        "\nTip: $" + to_string_double(meal_cost * 15 / 100) +
-        "\n"
-        "====================\nTotal: $" +
-        to_string_double(total) + "\n";
-    std::string input = to_string_double(meal_cost) + " 15";
-    ASSERT_EXECEQ("main", input, unittest_output);
-  }
-
-  // umm
-  /*for(int i = 0; i < 10; i++)
-  {
-    // randomly generate a meal cost between 0 and $50
-    double meal_cost = (((double)rand() / RAND_MAX) * pow(10,rand()%5));
-    // make sure the randomly generated double only has 2 decimal places
-    meal_cost -=  fmod(meal_cost,0.01);
-    double taxes = meal_cost * 0.075;
-    // randomly generate a tip between 0 and 15.00
-    double tip = (rand() % 10 + 6)/RAND_MAX;
-    double total = meal_cost + taxes + meal_cost * tip / 100;
-    std::string unittest_output = "Please input meal cost: Please input tip "
-                        "percentage: \nRestaurant Bill\n====================\n"
-                        "Subtotal: $" + to_string_double(meal_cost) +
-                        "\nTaxes: $" + to_string_double(taxes) + "\nTip: " +
-                        to_string_double(meal_cost * tip/100) + "\n"
-                        "====================\nTotal: $" +
-                        to_string_double(total) + "\n";
-    std::string input = to_string_double(meal_cost) + " " +
-                        to_string_double(tip);
-    ASSERT_EXECEQ("main", input, unittest_output);
-  }*/
-}
-
 TEST(Restaurant, Taxes) {
-  for (int i = 0; i < 10; i++) {
-    // randomly generate a meal cost between 0 and $50
-    double meal_cost = 25.65;
-    // make sure the randomly generated double only has 2 decimal places
-    double taxes = meal_cost * 0.075;
-    double total = meal_cost + taxes + meal_cost * 15 / 100;
-    std::string taxes_string = "Taxes: $" + to_string_double(taxes);
-    std::string unittest_output =
-        "Please input meal cost: Please input tip "
-        "percentage: \nRestaurant Bill\n====================\n"
-        "Subtotal: $25.65\nTaxes: $";
-    unittest_output += to_string_double(taxes) + "\nTip: $" +
-                      to_string_double(meal_cost * 15 / 100) + "\n" +
-                      "====================\nTotal: $" +
-                      to_string_double(total) + "\n";
-    std::string input = to_string_double(meal_cost) + " 15";
-    ASSERT_EXECEQ("main", input, unittest_output);
-  }
+  std::string unittest_output =
+      "Please input meal cost: Please input tip percentage: \nRestaurant "
+      "Bill\n====================\nSubtotal: $10.00\nTaxes: $0.75\nTip: "
+      "$0.90\n====================\nTotal: $11.65\n";
+  std::string input = "10.00 9";
+  ASSERT_EXECEQ("main", input, unittest_output);
+}
+
+// Consider if this is required. This test fails when this formula is used
+// meal_cost * 7.5 / 100
+// but passes when this is used
+// meal_csot * 0.075
+/*TEST(Restaurant, TaxesPrecisionTest) {
+  std::string unittest_output =
+      "Please input meal cost: Please input tip percentage: \nRestaurant "
+      "Bill\n====================\nSubtotal: $30.20\nTaxes: $2.27\nTip: "
+      "$2.72\n====================\nTotal: $35.18\n";
+  std::string input = "30.20 9";
+  ASSERT_EXECEQ("main", input, unittest_output);
+}*/
+
+TEST(Restaurant, ZeroTip) {
+
+  std::string unittest_output =
+      "Please input meal cost: Please input tip percentage: \nRestaurant "
+      "Bill\n====================\nSubtotal: $27.50\nTaxes: $2.06\nTip: "
+      "$0.00\n====================\nTotal: $29.56\n";
+  std::string input = "27.50 0";
+  ASSERT_EXECEQ("main", input, unittest_output);
 }
 
 TEST(Restaurant, Tip) {
-  for (int i = 0; i < 10; i++) {
-    double meal_cost = 30.20;
-    double taxes = meal_cost * 0.075;
-    // randomly generate a tip between 0 and 15.00
-    double tip = (rand() % 10 + 6) / RAND_MAX;
-    tip -= fmod(tip, 0.01);
-    double total = meal_cost + taxes + meal_cost * tip / 100;
-    std::string unittest_output =
-        "Please input meal cost: Please input tip "
-        "percentage: \nRestaurant Bill\n====================\n"
-        "Subtotal: $30.20\nTaxes: $";
-    unittest_output += to_string_double(taxes) + "\nTip: $" +
-                      to_string_double(meal_cost * tip / 100) + "\n" +
-                      "====================\nTotal: $" +
-                      to_string_double(total) + "\n";
-    std::string input =
-        to_string_double(meal_cost) + " " + to_string_double(tip);
-    ASSERT_EXECEQ("main", input, unittest_output);
-  }
+
+  std::string unittest_output =
+      "Please input meal cost: Please input tip percentage: \nRestaurant "
+      "Bill\n====================\nSubtotal: $54.58\nTaxes: $4.09\nTip: "
+      "$5.46\n====================\nTotal: $64.13\n";
+  std::string input = "54.58 10";
+  ASSERT_EXECEQ("main", input, unittest_output);
 }
 
 TEST(Restaurant, Total) {
-  for (int i = 0; i < 10; i++) {
-    // randomly generate a meal cost between 0 and $50
-    double meal_cost = (((double)rand() / RAND_MAX) * pow(10, rand() % 5));
-    // make sure the randomly generated double only has 2 decimal places
-    meal_cost -= fmod(meal_cost, 0.01);
-    double taxes = meal_cost * 0.075;
-    // randomly generate a tip between 0 and 15.00
-    double tip = (rand() % 10 + 6) / RAND_MAX;
-    double total = meal_cost + taxes + meal_cost * tip / 100;
     std::string unittest_output =
-        "Please input meal cost: Please input tip "
-        "percentage: \nRestaurant Bill\n====================\n"
-        "Subtotal: $" +
-        to_string_double(meal_cost) + "\nTaxes: $" + to_string_double(taxes) +
-        "\nTip: $" + to_string_double(meal_cost * tip / 100) +
-        "\n"
-        "====================\nTotal: $" +
-        to_string_double(total) + "\n";
-    std::string input =
-        to_string_double(meal_cost) + " " + to_string_double(tip);
-    ASSERT_EXECEQ("main", input, unittest_output);
-  }
+      "Please input meal cost: Please input tip percentage: \nRestaurant "
+      "Bill\n====================\nSubtotal: $314.19\nTaxes: $23.56\nTip: "
+      "$40.84\n====================\nTotal: $378.60\n";
+  std::string input = "314.19 13";
+  ASSERT_EXECEQ("main", input, unittest_output);
 }
 
 int main(int argc, char **argv) {
