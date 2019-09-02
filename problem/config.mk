@@ -5,7 +5,7 @@ HEADERS       :=
 # Space-separated list of implementation files (e.g., algebra.cpp)
 IMPLEMS       :=
 # File containing main
-DRIVER        := main.cpp
+DRIVER        :=
 # Expected name of executable file
-EXECFILE      := main
+EXECFILE      :=
 CLANGTDY_CHKS := *,-google-build-using-namespace,-fuchsia-default-arguments,-llvm-header-guard
