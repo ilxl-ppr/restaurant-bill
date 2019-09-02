@@ -15,6 +15,12 @@ Tip: $5.10
 ====================
 Total: $41.65
 ```
+
+# Submission checklist
+1. Compiled and ran the driver (main).
+1. Manually checked for compilation and logical errors.
+1. Ensured no errors on the unit test (make test).
+
 # Code evaluation
 Open the terminal and navigate to the folder that contains this exercise. Assuming you have pulled the code inside of `/home/student/labex02-tuffy` and you are currently in `/home/student` you can issue the following commands
 
