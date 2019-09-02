@@ -2,6 +2,12 @@
 #include <gtest/gtest.h>
 #include "gtest_ext.h"
 
+TEST(UserInput, AskMealCostAndTip) {
+  std::string user_input = "10.00 9.00";
+  ASSERT_EXECEXIT("main", user_input, 3)
+    << "      Your program should ask for the customer's meal cost and tip percentage.";
+}
+
 TEST(Restaurant, Taxes) {
   std::string unittest_output =
       "Please input meal cost: Please input tip percentage: \nRestaurant "
