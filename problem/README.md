@@ -1,7 +1,7 @@
 # Restaurant bill
 Create a program that computes the restaurant bill. The program should ask the user for the meal's cost and the tip percentage.
 
-Tax is computed as 7.5% of the meal cost, while the tip is computed by multiplying the tip percentage from the user and the meal cost. Display the meal cost, tax, tip, and total amount. Follow the sample output below as closely as possible. Take note that different user input results in a different output.
+Tax is computed as 7.5% of the meal cost, and should be defined as a constant in your program. The tip is computed by multiplying the tip percentage from the user by the meal cost. Display the meal cost, tax, tip, and total amount. Follow the sample output below as closely as possible. Take note that different user input results in a different output.
 
 ```
 Please input meal cost: 34
