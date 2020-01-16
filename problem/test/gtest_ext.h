@@ -9,6 +9,7 @@
 #include <future>
 #include <chrono>
 #include <map>
+#include <fstream>
 #include "termcolor/termcolor.hpp"
  
 class SkipListener : public ::testing::EmptyTestEventListener
@@ -31,6 +32,32 @@ class SkipListener : public ::testing::EmptyTestEventListener
     }    
 };
  
+class UnitTestFileManager : public ::testing::Test {
+public:
+  UnitTestFileManager(const std::string &filename): filename_(filename) { }
+protected:
+  void SetUp() override {
+    std::ifstream my_empty_file;
+    my_empty_file.open(filename_);
+    if (my_empty_file.good()) {
+      rename(filename_.c_str(), (PREFIX + filename_).c_str());
+      file_exists = true;
+    }
+    my_empty_file.close();
+  }
+
+  void TearDown() override {
+    if (file_exists) {
+      rename((PREFIX + filename_).c_str(), filename_.c_str());
+    } else {
+      remove(filename_.c_str());
+    }
+  }
+  const std::string PREFIX{"u_test"};
+  bool file_exists = false;
+  std::string filename_;
+};
+
 // Run and retrieves the output of an executable program from
 // the command line.
 //
@@ -247,7 +274,7 @@ template <typename T>
   if(stmt_future.wait_for(std::chrono::seconds(max_dur)) == std::future_status::timeout) {
     return ::testing::AssertionFailure()
            << "Input: " << prog_input
-           << "\n      the program took more than " << max_dur
+           << "\n      The program took more than " << max_dur
            << " seconds to exit. Check for infinite loops or "
            << "unnecessary inputs.";
   } else {
@@ -279,12 +306,16 @@ template <typename T>
   ASSERT_THAT(main_output(prog_name, input), matcher) << "   Input: " << input; \
 }
  
-// This macro asserts that the result of performing the statement
-// is equal to the expected value in the standard output (cout)
+// This macro simulates standard input and output when calling a given statement.
+// The `input` parameter is routed to the simulated standard input stream (`std::cin`)
+// so that the given statement receives it.
+// The check block can contain statements that have access to the statement's output on the
+// standard output (`std::cout`) using either the `SIO_OUT` or `your_output variables`.
 //
-// @param expected  expected string value
+// @param input     input value
 // @param stmt      statement(s) performed
-#define ASSERT_SIO_EQ(input, expected, stmt) { \
+// @param check     code block that has access to the programs output to `std::cout`
+#define SIMULATE_SIO(input, stmt, check) { \
   std::stringstream input_ss, output_ss; \
   auto old_inputbuf = std::cin.rdbuf(input_ss.rdbuf()); \
   auto old_outputbuf = std::cout.rdbuf(output_ss.rdbuf()); \
@@ -292,14 +323,16 @@ template <typename T>
   stmt; \
   std::cin.rdbuf(old_inputbuf); \
   std::cout.rdbuf(old_outputbuf); \
-  std::string your_output = output_ss.str(); \
-  ASSERT_EQ(your_output, expected); \
+  const std::string SIO_OUT = output_ss.str(); \
+  const std::string SIO_IN = input, your_output = SIO_OUT; \
+  check; \
 }
  
 // Version of ASSERT_SIO_EQ that uses google mock's matchers
 //
 // @param expected  expected string value
 // @param stmt      statement(s) performed
+// deprecated by SIMULATE_SIO
 #define ASSERT_SIO_THAT(input, expected, stmt) { \
   std::stringstream input_ss, output_ss; \
   auto old_inputbuf = std::cin.rdbuf(input_ss.rdbuf()); \
@@ -334,8 +367,8 @@ template <typename T>
   }, std::ref(completed)).detach(); \
   if(stmt_future.wait_for(std::chrono::seconds(secs)) == std::future_status::timeout) \
     if (!::testing::Test::HasFatalFailure()) { \
-      GTEST_FATAL_FAILURE_("       timed out (> " #secs \
-      " seconds). Check code for infinite loops"); \
+      GTEST_FATAL_FAILURE_("       Your program took more than " #secs \
+      " seconds to exit. Check for infinite loops or unnecessary inputs."); \
     } \
     if (::testing::Test::HasFatalFailure()) FAIL(); \
 }
