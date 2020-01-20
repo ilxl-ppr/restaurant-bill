@@ -66,7 +66,7 @@ make all
 1. When everything runs correctly,  let's copy your code into the Github repository. The first step is to add your code to what is called the staging area using git's `add` command. The parameter after `add` is the name of the file you want to add. There are cases when you have multiple changed files, so you can just type . (period) to add all modified files.
 
     ```
-    git add .
+    git add main.cpp
     ```
 1. Once everything is in the staging area, we use the `commit` command to tell git that we have added everything we need into the staging area.
 
