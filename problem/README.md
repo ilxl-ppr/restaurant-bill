@@ -1,11 +1,13 @@
 # Restaurant bill
 Create a program that computes the restaurant bill. The program should ask the user for the meal's cost and the tip percentage.
 
-Assume that the tax is 7.5% of the meal cost. Specifically, please use the value 0.075 to avoid issues with the unit test. This value should be defined as a constant in your program. And the tip is computed by multiplying the tip percentage from the user by the meal cost. Display the meal cost, tax, tip, and total amount. Follow the sample output below as closely as possible. Take note that different user input results in a different output.
+Assume that the tax is 7.5% of the meal cost. Specifically, please use the value 0.075 to avoid issues with the unit test. This value should be defined as a constant in your program. And the tip is computed by multiplying the tip percentage from the user by the meal cost. Display the meal cost, tax, tip, and total amount.
 
-```
-Please input meal cost: 34
-Please input tip percentage: 15
+Follow the sample output below as closely as possible. Note that <b>bold</b> values in the sample represent input by the user. Take note that different user input results in a different output.
+
+<pre>
+Please input meal cost: <b>34</b>
+Please input tip percentage: <b>15</b>
 
 Restaurant Bill
 ====================
@@ -14,7 +16,7 @@ Taxes: $2.55
 Tip: $5.10
 ====================
 Total: $41.65
-```
+</pre>
 
 # Submission checklist
 1. Compiled and ran the driver (main).
@@ -72,6 +74,11 @@ make all
 
     ```
     git commit
+    ```
+    Alternatively, you could add a comment to the `commit` command in order to skip the *nano* editor step described below.
+
+    ```
+    git commit -m "Finished prob01"
     ```
 1. In case it asks you  to configure global variables for an email and name, just copy the commands it provides then replace the dummy text with your email and Github username.
 
