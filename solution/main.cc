@@ -1,8 +1,7 @@
 #include <iomanip>
 #include <iostream>
 
-int main()
-{
+int main() {
   const double CA_TAX = 0.075;
   const int TIP_DIVISOR = 100;
   double meal_cost;

@@ -1,6 +1,6 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include "gtest_ext.h"
+#include "../cppaudit/gtest_ext.h"
 
 using ::testing::HasSubstr;
 
@@ -49,6 +49,14 @@ TEST(Driver, Output) {
 
 int main(int argc, char **argv) {
   testing::InitGoogleTest(&argc, argv);
-  ::testing::UnitTest::GetInstance()->listeners().Append(new SkipListener());
+  bool skip = true;
+  for (int i = 0; i < argc; i++) {
+    if (std::string(argv[i]) == "--noskip") {
+      skip = false;
+    }
+  }
+  if (skip) {
+    ::testing::UnitTest::GetInstance()->listeners().Append(new SkipListener());
+  }
   return RUN_ALL_TESTS();
 }

@@ -43,10 +43,10 @@ cd ..
 cd prob02
 ```
 
-Use the `clang++` command to compile your code and the `./` command to run it. The sample code below shows how you would compile code save in `main.cpp` and into the executable file `main`. Make sure you use the correct filenames required in this problem.  Take note that if you make any changes to your code, you will need to compile it first before you see changes when running it.
+Use the `clang++` command to compile your code and the `./` command to run it. The sample code below shows how you would compile code save in `main.cc` and into the executable file `main`. Make sure you use the correct filenames required in this problem.  Take note that if you make any changes to your code, you will need to compile it first before you see changes when running it.
 
 ```
-clang++ -std=c++17 main.cpp -o main
+clang++ -std=c++17 main.cc -o main
 ./main
 ```
 
@@ -68,7 +68,7 @@ make all
 1. When everything runs correctly,  let's copy your code into the Github repository. The first step is to add your code to what is called the staging area using git's `add` command. The parameter after `add` is the name of the file you want to add. There are cases when you have multiple changed files, so you can just type . (period) to add all modified files.
 
     ```
-    git add main.cpp
+    git add main.cc
     ```
 1. Once everything is in the staging area, we use the `commit` command to tell git that we have added everything we need into the staging area.
 
