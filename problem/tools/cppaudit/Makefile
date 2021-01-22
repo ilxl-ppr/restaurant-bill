@@ -73,8 +73,8 @@ noskiptest: install_gtest $(OUTPUT_PATH)/unittest
 	@cd $(REL_ROOT_PATH)/ && ./$(OUTPUT_FROM_ROOT)/unittest --noskip --gtest_output="xml:$(OUTPUT_FROM_ROOT)/unittest.xml"
 	@echo -e "\n========================\nUnit test complete\n========================\n"
 
-$(OUTPUT_PATH)/compile_commands.json :
-	@cd $(ROOT_PATH)/ && bash $(CPP_AUDIT_PATH)/gen_ccjs.sh $(OUTPUT_FROM_ROOT) $(EXEC_FILE) $(DRIVER) $(IMPLEMS) $(HEADERS)
+$(OUTPUT_PATH)/compile_commands.json : $(SETTINGS_PATH)/config.mk
+	@cd $(ROOT_PATH)/ && bash $(CPP_AUDIT_PATH)/gen_ccjs.sh $(OUTPUT_FROM_ROOT) $(EXEC_FILE) $(DRIVER) $(IMPLEMS)
 
 stylecheck: $(OUTPUT_PATH)/compile_commands.json
 ifndef HAS_CLANGTDY
@@ -90,7 +90,7 @@ else
 endif
 endif
 	@echo -e "========================\nRunning style checker\n========================\n"
-	@cd $(REL_ROOT_PATH)/ && clang-tidy -p=$(OUTPUT_FROM_ROOT) -quiet -header-filter=.* -export-fixes=$(OUTPUT_FROM_ROOT)/style.yaml $(IMPLEMS) $(HEADERS) $(DRIVER)
+	@cd $(REL_ROOT_PATH)/ && clang-tidy -p=$(OUTPUT_FROM_ROOT) -quiet -header-filter=.* -export-fixes=$(OUTPUT_FROM_ROOT)/style.yaml $(IMPLEMS) $(DRIVER)
 	@echo -e "========================\nStyle checker complete\n========================\n"
 
 formatcheck:
